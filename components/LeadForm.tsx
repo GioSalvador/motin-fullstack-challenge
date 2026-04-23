@@ -36,8 +36,9 @@ export default function LeadForm() {
     if (error) {
       setError(true)
     } else {
-      console.log('GTM Event: Lead Generated')
-      setSuccess(true)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('GTM Event: Lead Generated')
+}      setSuccess(true)
       setForm({ name: '', email: '', phone: '', necessity: '' })
     }
     setLoading(false)

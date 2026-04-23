@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, Mail, Loader2 } from 'lucide-react' // Opcional: lucide-react
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -33,20 +32,18 @@ export default function LoginPage() {
 
   return (
     <main className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Background Decorativo */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-600/10 rounded-full blur-[120px]" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-600/10 rounded-full blur-3xl" />
       
       <div className="w-full max-w-md z-10">
-        {/* Voltar para Home */}
         <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-8 text-sm uppercase tracking-widest"
         >
-          <ArrowLeft size={16} />
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
           Voltar para o site
         </Link>
 
-        <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-8 md:p-10 shadow-2xl">
+        <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-8 md:p-10 shadow-lg">
           <div className="text-center mb-10">
             <Image 
               src="/motin-logo-white.avif" 
@@ -55,7 +52,7 @@ export default function LoginPage() {
               height={40} 
               className="mx-auto mb-6"
             />
-            <h1 className="text-2xl font-bold text-white uppercase tracking-tight">Área do Administrador</h1>
+            <h1 className="text-2xl font-bold text-white uppercase tracking-tight text-balance">Área do Administrador</h1>
             <p className="text-gray-500 text-sm mt-2">Acesse o dashboard via Magic Link</p>
           </div>
 
@@ -66,7 +63,7 @@ export default function LoginPage() {
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
-                  <Mail size={18} />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </span>
                 <input
                   id="email"
@@ -86,7 +83,7 @@ export default function LoginPage() {
               className="w-full bg-white text-black font-bold py-4 rounded-xl uppercase tracking-widest hover:bg-orange-500 hover:text-white transition-all active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 hover:cursor-pointer"
             >
               {loading ? (
-                <Loader2 className="animate-spin" size={20} />
+                <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
               ) : (
                 'Enviar Link de Acesso'
               )}

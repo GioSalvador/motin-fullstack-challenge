@@ -3,22 +3,14 @@ import { createSupabaseServer } from '@/lib/supabaseServer'
 import { toggleContactStatus } from './actions'
 import Image from 'next/image'
 import Link from 'next/link'
-import { 
-  Users, 
-  Clock, 
-  CheckCircle2, 
-  BarChart3, 
-  LogOut,
-  Mail,
-  Phone
-} from 'lucide-react'
 
 export default async function AdminPage() {
   const supabase = await createSupabaseServer()
 
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
-
+    if (!user) {
+      redirect('/login')
+    }
   const { data: leads, error } = await supabase
     .from('leads')
     .select('*')
@@ -35,48 +27,52 @@ export default async function AdminPage() {
       <nav className="border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-4">
-                <Image 
-                  src="/motin-logo-white.avif" 
-                  alt="Motin Films Admin" 
-                  width={100} 
-                  height={32} 
-                  className="w-auto h-7 md:h-8"
-                  priority
-                />
-                <span className="ml-3 pl-3 border-l border-white/20 text-[10px] uppercase tracking-[0.2em] text-gray-500 hidden sm:inline">
-                  Admin Panel
-                </span>
-            </div>
+            <Image 
+              src="/motin-logo-white.avif" 
+              alt="Motin Films Admin" 
+              width={100} 
+              height={32} 
+              className="w-auto h-7 md:h-8"
+              priority
+            />
+            <span className="ml-3 pl-3 border-l border-white/20 text-[10px] uppercase tracking-[0.2em] text-gray-500 hidden sm:inline">
+              Admin Panel
+            </span>
           </div>
-          <form action="/auth/signout" method="post">
-            <button className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-xs uppercase tracking-tighter">
-              <Link href="/" className="transition-opacity hover:opacity-80 flex items-center">
-                <LogOut size={14} /> Sair
-              </Link>
-            </button>
-          </form>
+            <Link href="/" className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-xs uppercase tracking-tighter cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+              Sair
+            </Link>
         </div>
       </nav>
 
       <main className="max-w-7xl mx-auto p-6 md:p-10">
-        {/* Header Section */}
         <header className="mb-10">
-          <h2 className="text-3xl font-bold text-white tracking-tight">Dashboard</h2>
+          <h2 className="text-3xl font-bold text-white tracking-tight text-balance">Dashboard</h2>
           <p className="text-gray-500">Gerencie suas oportunidades de negócio em tempo real.</p>
         </header>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <StatCard title="Total de Leads" value={totalLeads} icon={<Users className="text-blue-500" />} />
-          <StatCard title="Pendentes" value={pendingLeads} icon={<Clock className="text-orange-500" />} />
-          <StatCard title="Contatados" value={contactedLeads} icon={<CheckCircle2 className="text-green-500" />} />
+          <StatCard 
+            title="Total de Leads" 
+            value={totalLeads} 
+            icon={<svg className="text-blue-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>} 
+          />
+          <StatCard 
+            title="Pendentes" 
+            value={pendingLeads} 
+            icon={<svg className="text-orange-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>} 
+          />
+          <StatCard 
+            title="Contatados" 
+            value={contactedLeads} 
+            icon={<svg className="text-green-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>} 
+          />
         </div>
 
-        {/* Leads Table */}
         <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
           <div className="px-6 py-4 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
-            <h3 className="font-semibold text-white">Leads Recentes</h3>
+            <h3 className="font-semibold text-white text-sm">Leads Recentes</h3>
             <span className="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-400 uppercase tracking-widest">Live Feed</span>
           </div>
 
@@ -96,9 +92,15 @@ export default async function AdminPage() {
                     <td className="px-6 py-5">
                       <div className="flex flex-col">
                         <span className="text-white font-medium">{lead.name}</span>
-                        <div className="flex flex-col gap-1 mt-1 text-xs text-gray-500">
-                          <span className="flex items-center gap-1"><Mail size={12}/> {lead.email}</span>
-                          <span className="flex items-center gap-1"><Phone size={12}/> {lead.phone}</span>
+                        <div className="flex flex-col gap-1 mt-1 text-[11px] text-gray-500">
+                          <span className="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            {lead.email}
+                          </span>
+                          <span className="flex items-center gap-1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            {lead.phone}
+                          </span>
                         </div>
                       </div>
                     </td>
@@ -108,7 +110,7 @@ export default async function AdminPage() {
                       </span>
                     </td>
                     <td className="px-6 py-5 text-center">
-                      <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${
+                      <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium ${
                         lead.status === 'contacted' ? 'text-green-500' : 'text-orange-500'
                       }`}>
                         <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
@@ -121,7 +123,7 @@ export default async function AdminPage() {
                       <form action={toggleContactStatus}>
                         <input type="hidden" name="id" value={lead.id} />
                         <input type="hidden" name="status" value={lead.status} />
-                        <button className={`text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-lg transition-all hover:cursor-pointer ${
+                        <button className={`text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-lg transition-all cursor-pointer ${
                           lead.status === 'contacted'
                             ? 'bg-white/5 text-gray-400 hover:bg-white/10'
                             : 'bg-white text-black hover:bg-orange-500 hover:text-white'
@@ -146,9 +148,9 @@ function StatCard({ title, value, icon }: { title: string, value: number, icon: 
     <div className="bg-[#0a0a0a] border border-white/5 p-6 rounded-2xl">
       <div className="flex items-start justify-between mb-4">
         <div className="p-2 bg-white/5 rounded-lg">{icon}</div>
-        <BarChart3 size={16} className="text-gray-700" />
+        <svg className="text-gray-700" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
       </div>
-      <p className="text-gray-500 text-xs uppercase tracking-widest font-medium mb-1">{title}</p>
+      <p className="text-gray-500 text-[10px] uppercase tracking-widest font-medium mb-1">{title}</p>
       <p className="text-3xl font-bold text-white">{value}</p>
     </div>
   )
