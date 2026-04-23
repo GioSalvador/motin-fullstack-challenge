@@ -97,7 +97,7 @@ Essa abordagem reduz JavaScript no client e melhora a performance.
 * Lighthouse:
 
   * Desktop: 100
-  * Mobile: 76
+  * Mobile: 93
 
 ### Otimizações aplicadas:
 
