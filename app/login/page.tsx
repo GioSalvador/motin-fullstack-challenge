@@ -15,12 +15,12 @@ export default function LoginPage() {
     setLoading(true)
     setMessage({ type: '', text: '' })
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/admin`,
-      }
-    })
+const { error } = await supabase.auth.signInWithOtp({
+  email,
+  options: {
+    emailRedirectTo: `${window.location.origin}/auth/callback?next=/admin`,
+  }
+})
 
     if (error) {
       setMessage({ type: 'error', text: 'Erro ao enviar o link de acesso.' })
