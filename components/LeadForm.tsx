@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+import { createClient } from '@/lib/supabaseClient'
 import type { Lead } from '@/types/lead'
 
 export default function LeadForm() {
@@ -31,9 +31,12 @@ export default function LeadForm() {
     setError(false)
     setSuccess(false)
 
+    const supabase = createClient() 
+    
     const { error } = await supabase.from('leads').insert([form])
 
     if (error) {
+      console.log(error)
       setError(true)
     } else {
       if (process.env.NODE_ENV === 'development') {
@@ -43,6 +46,7 @@ export default function LeadForm() {
     }
     setLoading(false)
   }
+  console.log(process.env.NEXT_PUBLIC_SUPABASE_URL)
 
   const inputStyle = "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
 
