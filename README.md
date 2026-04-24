@@ -161,7 +161,7 @@ npm run dev
 
 ## Possíveis melhorias
 
-* Gráfico de leads por dia (BI)
+* Adicionar mais opções de gráficos (BI)
 * Paginação e filtros no dashboard
 * Validação mais robusta (Zod / React Hook Form)
 * Melhorias visuais e animações
