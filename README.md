@@ -54,6 +54,14 @@ O objetivo foi criar um **Mini-Ecossistema de Captação de Leads**, composto po
 * Listagem de leads em tempo real
 * Alteração de status (new ↔ contacted)
 
+### Dashboard Analytics
+
+Foi implementado um gráfico de Leads por dia utilizando a biblioteca Recharts.
+
+Os dados são agrupados a partir do campo created_at, permitindo visualizar a quantidade de leads gerados ao longo do tempo.
+
+O gráfico é responsivo, possui tooltip customizado e se integra diretamente com os dados do Supabase.
+
 ---
 
 ## Segurança (RLS)
