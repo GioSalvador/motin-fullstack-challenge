@@ -36,7 +36,6 @@ export default async function AdminPage() {
     return acc
   }, {} as Record<string, { date: string; total: number }>)
 )
-console.log("AQUI", user)
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200">
       <nav className="border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-30">
