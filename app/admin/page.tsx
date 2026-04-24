@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createSupabaseServer } from '@/lib/supabaseServer'
 import { toggleContactStatus } from './actions'
+import LeadsChart from '@/components/LeadsChart'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -22,6 +23,20 @@ export default async function AdminPage() {
   const contactedLeads = leads?.filter(l => l.status === 'contacted').length || 0
   const pendingLeads = totalLeads - contactedLeads
 
+  const leadsPerDay = Object.values(
+  leads.reduce((acc, lead) => {
+    const date = new Date(lead.created_at).toLocaleDateString('pt-BR')
+
+    if (!acc[date]) {
+      acc[date] = { date, total: 0 }
+    }
+
+    acc[date].total += 1
+
+    return acc
+  }, {} as Record<string, { date: string; total: number }>)
+)
+console.log("AQUI", user)
   return (
     <div className="min-h-screen bg-[#050505] text-gray-200">
       <nav className="border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-30">
@@ -69,6 +84,16 @@ export default async function AdminPage() {
             icon={<svg className="text-green-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>} 
           />
         </div>
+
+        <div className="mb-12">
+  <h3 className="text-lg font-semibold text-white mb-4">
+    Leads por dia
+  </h3>
+
+  <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl p-6">
+    <LeadsChart data={leadsPerDay} />
+  </div>
+</div>
 
         <div className="bg-[#0a0a0a] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
           <div className="px-6 py-4 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
